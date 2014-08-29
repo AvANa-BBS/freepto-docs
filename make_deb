@@ -40,7 +40,7 @@ cp "deb.tmpl" "deb"
 # it only accepts file (not directory) and the syntax is ugly
 # (a space at line beginning is required)
 ### this "find" does exactly this, populating the deb file
-find freepto -type f -exec echo "" {} /usr/share/doc \; >> "$PKGDIR/deb"
+find freepto -type f -exec echo "" {} /usr/share/doc \; >> "deb"
 
 phase 'building .deb'
 equivs-build deb
