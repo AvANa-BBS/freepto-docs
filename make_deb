@@ -24,7 +24,7 @@ mkdir -p "freepto/it_IT.UTF-8"
 mkdir -p "freepto/es_ES.UTF-8"
 
 echo 'docs-it'
-./ve/bin/python 'extract_wiki/extract.py' 'https://we.riseup.net/freepto-wiki/freepto-docs' '$PKGDIR/freepto/it_IT.UTF-8/freepto-docs.html'
+./ve/bin/python 'extract_wiki/extract.py' 'https://we.riseup.net/freepto-wiki/freepto-docs' 'freepto/it_IT.UTF-8/freepto-docs.html'
 
 echo 'docs-es'
 $py_bin extract_wiki/extract.py 'https://we.riseup.net/freepto-wiki/freepto-docs-es' 'freepto/es_ES.UTF-8/freepto-docs.html'
