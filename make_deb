@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+phase() {
+	echo -e "\n### $*\n"
+} 
+set -e
+py_bin="./ve/bin/python"
+PIP="./ve/bin/pip"
+
+if ! [ -x "$py_bin" ]; then
+        echo "virtualenv not found"
+	virtualenv --quiet -p python3 ve
+fi
+if ! [ -x "$PIP" ]; then
+        echo "virtualenv not found"
+        exit 1
+fi
+
+phase "updating virtualenv"
+"$PIP" -q install -Ur "extract_wiki/requirements.txt"
+
+phase 'downloading docs'
+rm -rf "freepto/"
+mkdir -p "freepto/it_IT.UTF-8"
+mkdir -p "freepto/es_ES.UTF-8"
+
+echo 'docs-it'
+echo ./ve/bin/python 'extract_wiki/extract.py' 'https://we.riseup.net/freepto-wiki/freepto-docs' '$PKGDIR/freepto/it_IT.UTF-8/freepto-docs.html'
+
+echo 'docs-es'
+$py_bin extract_wiki/extract.py 'https://we.riseup.net/freepto-wiki/freepto-docs-es' 'freepto/es_ES.UTF-8/freepto-docs.html'
+
+echo 'opuscolo'
+$py_bin extract_wiki/extract.py 'https://we.riseup.net/avana/opuscolo' 'freepto/it_IT.UTF-8/cryptordie.html'
+
+phase 'preparing for deb building'
+
+rm -f *.deb
+cp "deb.tmpl" "deb"
+### equivs-build hack:
+# it only accepts file (not directory) and the syntax is ugly
+# (a space at line beginning is required)
+### this "find" does exactly this, populating the deb file
+find freepto -type f -exec echo "" {} /usr/share/doc \; >> "$PKGDIR/deb"
+
+phase 'building .deb'
+equivs-build deb
