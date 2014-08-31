@@ -20,17 +20,18 @@ phase "updating virtualenv"
 
 phase 'downloading docs'
 rm -rf "freepto/"
-mkdir -p "freepto/it_IT.UTF-8"
-mkdir -p "freepto/es_ES.UTF-8"
+mkdir -p "freepto-docs/it_IT.UTF-8"
+mkdir -p "freepto-docs/es_ES.UTF-8"
+mkdir -p "cryptordie/it_IT.UTF-8"
 
 echo 'docs-it'
-./ve/bin/python 'extract_wiki/extract.py' 'https://we.riseup.net/freepto-wiki/freepto-docs' 'freepto/it_IT.UTF-8/freepto-docs.html'
+./ve/bin/python 'extract_wiki/extract.py' 'https://we.riseup.net/freepto-wiki/freepto-docs' 'freepto-docs/it_IT.UTF-8/freepto-docs.html'
 
 echo 'docs-es'
-$py_bin extract_wiki/extract.py 'https://we.riseup.net/freepto-wiki/freepto-docs-es' 'freepto/es_ES.UTF-8/freepto-docs.html'
+$py_bin extract_wiki/extract.py 'https://we.riseup.net/freepto-wiki/freepto-docs-es' 'freepto-docs/es_ES.UTF-8/freepto-docs.html'
 
 echo 'opuscolo'
-$py_bin extract_wiki/extract.py 'https://we.riseup.net/avana/opuscolo' 'freepto/it_IT.UTF-8/cryptordie.html'
+$py_bin extract_wiki/extract.py 'https://we.riseup.net/avana/opuscolo' 'cryptordie/it_IT.UTF-8/cryptordie.html'
 
 phase 'preparing for deb building'
 
@@ -40,7 +41,7 @@ cp "deb.tmpl" "deb"
 # it only accepts file (not directory) and the syntax is ugly
 # (a space at line beginning is required)
 ### this "find" does exactly this, populating the deb file
-find freepto -type f -exec echo "" {} /usr/share/doc \; >> "deb"
+find freepto-docs cryptordie -type f -exec echo "" {} /usr/share/doc/freepto-docs \; >> "deb"
 
 phase 'building .deb'
 equivs-build deb

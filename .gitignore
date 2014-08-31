@@ -2,4 +2,5 @@
 *.pyc
 /ve/
 /deb
-/freepto
+/freepto-docs
+/cryptordie
