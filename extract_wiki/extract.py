@@ -2,6 +2,7 @@
 
 import os
 import sys
+import shutil
 from urllib.request import urlopen, urlretrieve
 from urllib.parse import urljoin, urlsplit
 from datetime import datetime
@@ -18,7 +19,7 @@ def remove_js(content):
         s.replace_with(Comment("script rimosso"))
 
 
-def download_url(pageurl, target):
+def download_url(pageurl, target, div_id):
     imgdir = target + "_files"
 
     def get_external(el, tag):
@@ -32,7 +33,7 @@ def download_url(pageurl, target):
         el[tag] = os.path.join(os.path.basename(imgdir), base)
 
     p = BeautifulSoup(urlopen(pageurl))
-    content = p.find_all('div', id='wiki_html').pop()
+    content = p.find_all('div', id="%s" % div_id).pop()
     if content is None:
         raise Exception("cant' find #wiki_html; not a we.riseup.net page?")
     head = p.find('head')
@@ -44,6 +45,7 @@ def download_url(pageurl, target):
         get_external(image, "src")
     for css in p.find_all("link"):
         get_external(css, "href")
+    shutil.copy("%s/screen.css" %os.getcwd(), imgdir)
 
     # Finally, write to disk!
     print('''<html>%(head)s<body>
@@ -57,4 +59,4 @@ def download_url(pageurl, target):
 
 
 if __name__ == '__main__':
-    download_url(sys.argv[1], sys.argv[2])
+    download_url(sys.argv[1], sys.argv[2], sys.argv[3])

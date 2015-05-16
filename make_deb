@@ -25,13 +25,13 @@ mkdir -p "freepto-docs/es_ES.UTF-8"
 mkdir -p "cryptordie/it_IT.UTF-8"
 
 echo 'docs-it'
-./ve/bin/python 'extract_wiki/extract.py' 'https://we.riseup.net/freepto-wiki/freepto-docs' 'freepto-docs/it_IT.UTF-8/freepto-docs.html'
+./ve/bin/python 'extract_wiki/extract.py' 'https://we.riseup.net/freepto-wiki/freepto-docs' 'freepto-docs/it_IT.UTF-8/freepto-docs.html' 'wiki_159628'
 
 echo 'docs-es'
-$py_bin extract_wiki/extract.py 'https://we.riseup.net/freepto-wiki/freepto-docs-es' 'freepto-docs/es_ES.UTF-8/freepto-docs.html'
+$py_bin extract_wiki/extract.py 'https://we.riseup.net/freepto-wiki/freepto-docs-es' 'freepto-docs/es_ES.UTF-8/freepto-docs.html' 'wiki_157497'
 
-echo 'opuscolo'
-$py_bin extract_wiki/extract.py 'https://we.riseup.net/avana/opuscolo' 'cryptordie/it_IT.UTF-8/cryptordie.html'
+#echo 'opuscolo'
+#$py_bin extract_wiki/extract.py 'https://we.riseup.net/avana/opuscolo' 'cryptordie/it_IT.UTF-8/cryptordie.html' 'wiki_104119'
 
 phase 'preparing for deb building'
 
