@@ -16,6 +16,7 @@ if [ ! -d "$BASEDOC/$TOPIC" ]; then
 	exit 1                                                                  
 fi                                                                              
 if [ ! -d "$BASEDOC/$TOPIC/$LANG" ]; then                                       
+	zenity --warning --text="Can't found $TOPIC in your language" --title "$TOPIC"
 	$BROWSER "$BASEDOC/$TOPIC"                                              
 	exit 0
 fi                                                                              
