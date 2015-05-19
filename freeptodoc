@@ -8,7 +8,7 @@ TOPIC=$1
 BROWSER=${BROWSER:-x-www-browser}                                               
 
 if [ -z "$LANG" ]; then                                                         
-	LANG=$(egrep -o 'live-config.locales=[^ ]*'|cut -d= -f 2)               
+	LANG=$(egrep -o 'live-config.locales=[^ ]*' /proc/cmdline |cut -d= -f 2)               
 fi                                                                              
 
 if [ ! -d "$BASEDOC/$TOPIC" ]; then                                             
