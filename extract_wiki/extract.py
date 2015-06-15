@@ -48,15 +48,16 @@ def download_url(pageurl, target, div_id):
     shutil.copy("%s/screen.css" %os.getcwd(), imgdir)
 
     # Finally, write to disk!
-    print('''<html>%(head)s<body>
-          <div class="content_box"><div class="wiki">%(body)s</div></div>
-          <div class="creation-notes">
-          This is a copy of <a href="%(url)s">%(url)s</a>, taken on %(date)s
-          </div>
-          </body></html>''' % {'head': head, 'body': content, 'url': pageurl,
-                               'date': datetime.now().strftime('%d %B %Y')},
-          file=open(target, 'w'))
+    content = '''<html>%(head)s<body>
+    <div class="content_box"><div class="wiki">%(body)s</div></div>
+    <div class="creation-notes">
+    This is a copy of <a href="%(url)s">%(url)s</a>, taken on %(date)s
+    </div>
+    </body></html>''' % {'head': head, 'body': content, 'url': pageurl,
+                         'date': datetime.now().strftime('%d %B %Y')}
 
+    with open(target, 'w', encoding='utf-8') as buf:
+        buf.write(content)
 
 if __name__ == '__main__':
     download_url(sys.argv[1], sys.argv[2], sys.argv[3])
